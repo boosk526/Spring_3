@@ -62,8 +62,7 @@
   </form>
 </div>
 
-<script type="text/javascript" src="../resources/js/boardWrite.js">
-</script>
+<script type="text/javascript" src="../resources/js/boardWrite.js"></script>
 
 
 </body>
