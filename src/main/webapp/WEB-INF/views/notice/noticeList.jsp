@@ -8,6 +8,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <c:import url="../template/bootstrap.jsp"></c:import>
+<style type="text/css">
+	table{
+		margin-top: 10px;
+	}
+	.c1{
+		cursor: pointer;
+	}
+</style>
 </head>
 <body>
 
@@ -17,14 +25,15 @@
   <h3>Notice List</h3>
  <div class="row">
   <div class="col-sm-5">
-  <form action="./noticeList">
+  <form action="./noticeList" id="searchform">
+  <input type="hidden" name="curPage" id="curPage">
        <div class="input-group">
-			<select class="input-group-sm" id="sel1" name="kind">
+			<select class="input-group-sm" id="kind" name="kind" >
 				<option value="tt">Title</option>
 				<option value="wr">Writer</option>
 				<option value="con">Contents</option>
 			</select>        
-        <input id="msg" type="text" class="form-control" name="search" placeholder="Additional Info">
+        <input id="search" type="text" class="form-control" name="search" placeholder="Additional Info">
         <div class="input-group-btn">
               <button class="btn btn-default" type="submit">
             <i class="glyphicon glyphicon-search"></i>
@@ -59,15 +68,15 @@
   
   <div>
   <c:if test="${pager.beforeCheck}">
-  	<a href="./noticeList?curPage=${pager.startNum-1}&kind=${pager.kind}&search=${search}">[이전]</a>
+  		<span class="c1" title="${pager.startNum-1}">[이전]</span>	
   	</c:if>
   
   	<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
-  		<a href="./noticeList?curPage=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a>
+  		<span class="c1" title="${i}">${i}</span>	
   	</c:forEach>
   	
   	<c:if test="${pager.nextCheck}">
-  	<a href="./noticeList?curPage=${pager.lastNum+1}&kind=${pager.kind}&search=${pager.search}">[다음]</a>
+  	<span class="c1" title="${pager.lastNum+1}">[다음]</span> 
   	</c:if>
   </div>
   
@@ -75,6 +84,24 @@
   <a href="./noticeWrite" class="btn btn-default">Write</a>
   
 </div>
+
+<script type="text/javascript">
+		var kind='${pager.kind}';
+		var search='${pager.search}';
+		if(kind==''){
+			kind='tt';
+		}
+		$("#kind").val(kind);
+		$("#search").val(search);
+		
+	$(".c1").click(function() {
+		var c=$(this).attr("title");
+		$("#curPage").val(c);
+		$("#kind").val(kind);
+		$("#search").val(search);
+		$("#searchform").submit();
+	});
+</script>
 
 </body>
 </html>
